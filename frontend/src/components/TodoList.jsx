@@ -1,11 +1,11 @@
-function TodoList({ todos,onEdit }) {
+function TodoList({ todos,onEdit,onDelete }) {
 
     return (
 
         <div className="bg-white rounded-xl shadow-lg p-6 mt-6">
 
             <h2 className="text-2xl font-bold mb-4">
-                My Tasks
+                Task List
             </h2>
 
             {
@@ -16,30 +16,59 @@ function TodoList({ todos,onEdit }) {
                     </p>
 
                 ) : (
-
+             
                     todos.map((todo) => (
 
                         <div
-                            key={todo._id}
-                            className="border rounded-lg p-4 mb-3"
-                        >
+    key={todo._id}
+    className="bg-white rounded-xl shadow-md p-5 border hover:shadow-xl transition duration-300"
+>
 
-                            <h3 className="font-semibold text-lg">
-                                {todo.title}
-                            </h3>
+    <div className="flex justify-between items-center">
 
-                            <p className="text-gray-500">
-                                {todo.status}
-                            </p>
+        <h3 className="text-xl font-semibold text-gray-800">
+            📌 {todo.title}
+        </h3>
 
-                        <button onClick={()=>onEdit (todo)} className="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded">Edit</button>
+        <span
+            className={`px-3 py-1 rounded-full text-sm font-medium ${
+                todo.status === "Todo"
+                    ? "bg-yellow-100 text-yellow-700"
+                    : todo.status === "Doing"
+                    ? "bg-blue-100 text-blue-700"
+                    : "bg-green-100 text-green-700"
+            }`}
+        >
+            {todo.status}
+        </span>
 
-                        </div>
+    </div>
 
+    <div className="mt-5 flex justify-end gap-3">
+
+        <button
+            onClick={() => onEdit(todo)}
+            className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg transition"
+        >
+            ✏ Edit
+        </button>
+
+        <button
+            onClick={() => onDelete(todo._id)}
+            className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition"
+        >
+            🗑 Delete
+        </button>
+
+    </div>
+
+</div>
                     ))
+                   
 
                 )
             }
+            
 
         </div>
 
