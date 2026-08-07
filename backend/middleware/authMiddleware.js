@@ -1,5 +1,6 @@
 const jwt=require("jsonwebtoken");
 exports.protect=async(req,res,next)=>{
+    
     try{
     const authHeader=req.headers.authorization;
     if(!authHeader)
@@ -8,7 +9,7 @@ exports.protect=async(req,res,next)=>{
             message:"Access denied,no token provided"
         });
     }
- const token=authHeader.split("")[1];
+ const token=authHeader.split(" ")[1];
  const decoded=jwt.verify(token,
     process.env.JWT_SECRET
  );
