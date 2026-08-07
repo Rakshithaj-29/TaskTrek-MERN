@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { data } from "react-router-dom";
 import axios from "axios";
-function TodoForm(){
+function TodoForm({editingTodo,fetchTodos,setEditingTodo}){
     const [formData,setFormData]=useState({
         title:"",
         status:"Todo"
@@ -16,7 +16,19 @@ function TodoForm(){
         e.preventDefault();
         try{
             const token=localStorage.getItem("token");
-            console.log(token);
+            if(editingTodo){
+           const response=await axios.put(
+            `http://localhost:3000/todos/${editingTodo._id}`,
+
+            formData,
+            {
+                headers:{
+                    Authorization: `Bearer ${token}`
+                }
+            }
+           ) ;
+           alert("Todo updated successfully");
+            }else{
             const response=await axios.post(
                "http://localhost:3000/todos",
                 formData,
@@ -24,10 +36,11 @@ function TodoForm(){
                     headers:{
                         Authorization:`Bearer ${token}`
                 }
-            }
-            );
+            });
             alert("Todo created successfully");
-           console.log(response.data);
+        }
+           fetchTodos();
+           setEditingTodo(null);
            setFormData({
             title:"",
             status:"Todo"
@@ -36,8 +49,16 @@ function TodoForm(){
         {
             console.log(error.response?.data || error.message);
         }
+        
     };
-    
+    useEffect(()=>{
+        if(editingTodo){
+        setFormData({
+          title:editingTodo.title,
+          status:editingTodo.status
+        });
+    }
+    },[editingTodo]);
     return(
         <div>
             <form onSubmit={handleSubmit} className="mt-6 space-y-5">
@@ -48,7 +69,7 @@ function TodoForm(){
                 <option value="Done">Done</option>
 
             </select>
-            <button type="submit"className="w-full bg-cyan-500 hover:bg-cyan-600 transition duration-300 text-white py-3 rounded-lg font-semibold">+ Add task</button>
+            <button type="submit"className="w-full bg-cyan-500 hover:bg-cyan-600 transition duration-300 text-white py-3 rounded-lg font-semibold">{editingTodo?"Update Todo":"+Add Todo"}</button>
             </form>
         </div>
     )

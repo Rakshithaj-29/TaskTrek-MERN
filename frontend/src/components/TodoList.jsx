@@ -1,4 +1,4 @@
-function TodoList({ todos }) {
+function TodoList({ todos,onEdit }) {
 
     return (
 
@@ -31,6 +31,8 @@ function TodoList({ todos }) {
                             <p className="text-gray-500">
                                 {todo.status}
                             </p>
+
+                        <button onClick={()=>onEdit (todo)} className="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded">Edit</button>
 
                         </div>
 

@@ -10,6 +10,7 @@ function Dashboard() {
     const navigate=useNavigate();
     
     const[todos,setTodos]=useState([]);
+    const[editingTodo,setEditingTodo]=useState(null);
     useEffect(()=>{
 
     },[]);
@@ -55,9 +56,11 @@ function Dashboard() {
 
     <WelcomeCard />
 
-    <TodoForm />
+    <TodoForm editingTodo={editingTodo}
+    fetchTodos={fetchTodos}
+    setEditingTodo={setEditingTodo}/>
 
-    <TodoList todos={todos} />
+    <TodoList todos={todos} onEdit={setEditingTodo}/>
 
 </div>
                 
