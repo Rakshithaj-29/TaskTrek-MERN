@@ -4,9 +4,34 @@ import TodoForm from "../components/TodoForm";
 import TodoList from "../components/TodoList";
 import { useState,useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function Dashboard() {
     const navigate=useNavigate();
+    
+    const[todos,setTodos]=useState([]);
+    useEffect(()=>{
+
+    },[]);
+    const fetchTodos=async()=>{
+      try{
+        const token=localStorage.getItem("token");
+        const response=await axios.get("http://localhost:3000/todos",
+            
+            {
+                    headers:{
+                        Authorization:`Bearer ${token}`
+                }
+            }
+        );
+        setTodos(response.data);
+      }catch(error){
+        console.log(error.response?.data||error.message);
+      }
+    };
+    useEffect(()=>{
+        fetchTodos();
+    },[]);
     useEffect(()=>{
        const token=localStorage.getItem("token");
        if(!token){
@@ -14,16 +39,7 @@ function Dashboard() {
        }
     },[navigate]);
 
-    const todos = [
-    {
-        title: "Learn React",
-        status: "Todo"
-    },
-    {
-        title: "Build TaskTrek",
-        status: "Doing"
-    }
-];
+   
     return (
         <div className="min-h-screen bg-slate-200">
 
