@@ -1,15 +1,36 @@
 
 const Todo=require("../models/Todo");
-exports.getTodos=async(req,res)=>{
-    try{
-        const todos=await Todo.find({
-            user:req.user.id
-        });
-        res.json(todos);
 
-    }catch(error){
+exports.getTodos = async (req, res) => {
+    try {
+
+        const { search, status } = req.query;
+
+        const query = {
+            user: req.user.id
+        };
+
+        if (search) {
+            query.title = {
+                $regex: search,
+                $options: "i"
+            };
+        }
+
+        if (status && status !== "All") {
+            query.status = status;
+        }
+
+        const todos = await Todo.find(query);
+
+        res.status(200).json(todos);
+
+    } catch (error) {
+
+        console.log(error);
+
         res.status(500).json({
-            message:error.message
+            message: "Failed to fetch todos"
         });
     }
 };

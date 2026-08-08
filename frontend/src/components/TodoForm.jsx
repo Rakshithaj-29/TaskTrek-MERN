@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { data } from "react-router-dom";
+import toast from "react-hot-toast";
 import axios from "axios";
 function TodoForm({editingTodo,fetchTodos,setEditingTodo}){
     const [formData,setFormData]=useState({
@@ -27,7 +27,7 @@ function TodoForm({editingTodo,fetchTodos,setEditingTodo}){
                 }
             }
            ) ;
-           alert("Todo updated successfully");
+           toast.success("Todo updated successfully");
             }else{
             const response=await axios.post(
                "http://localhost:3000/todos",
@@ -37,7 +37,7 @@ function TodoForm({editingTodo,fetchTodos,setEditingTodo}){
                         Authorization:`Bearer ${token}`
                 }
             });
-            alert("Todo created successfully");
+            toast.success("Todo created successfully");
         }
            fetchTodos();
            setEditingTodo(null);
@@ -47,7 +47,7 @@ function TodoForm({editingTodo,fetchTodos,setEditingTodo}){
            });
         }catch(error)
         {
-            console.log(error.response?.data || error.message);
+            toast.error(error.response?.data || error.message);
         }
         
     };
@@ -59,22 +59,49 @@ function TodoForm({editingTodo,fetchTodos,setEditingTodo}){
         });
     }
     },[editingTodo]);
-    return(
-        <div>
-            <form onSubmit={handleSubmit} className="mt-6 space-y-5">
-                <h3 className="text-3xl font-bold text-blue-400">Add Your new task</h3>
-            <input type="text" name="title" value={formData.title} onChange={handleChange} placeholder="Enter the task title" className="w-full rounded-xl bg-white px-4 py-3"/>
-            <select name="status" value={formData.status} onChange={handleChange} className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3">
-                <option value="Todo" >Todo</option>
+    return (
+    <div className="bg-white rounded-2xl shadow-md p-6 mb-6">
+
+        <h3 className="text-2xl font-bold text-blue-500 mb-5">
+            {editingTodo ? "✏ Update Task" : "➕ Add New Task"}
+        </h3>
+
+        <form
+            onSubmit={handleSubmit}
+            className="flex flex-col lg:flex-row gap-4"
+        >
+
+            <input
+                type="text"
+                name="title"
+                value={formData.title}
+                onChange={handleChange}
+                placeholder="Enter the task title"
+                className="flex-1 rounded-xl border border-gray-300 bg-white px-4 py-3 outline-none focus:ring-2 focus:ring-cyan-400"
+            />
+
+            <select
+                name="status"
+                value={formData.status}
+                onChange={handleChange}
+                className="flex-1 w-full lg:w-44 rounded-xl border border-gray-300 bg-white px-4 py-3 outline-none focus:ring-2 focus:ring-cyan-400"
+            >
+                <option value="Todo">Todo</option>
                 <option value="Doing">Doing</option>
                 <option value="Done">Done</option>
-
             </select>
-            <button type="submit"className="w-full bg-cyan-500 hover:bg-cyan-600 transition duration-300 text-white py-3 rounded-lg font-semibold">{editingTodo?"Update Todo":"+Add Todo"}</button>
-            
-            </form>
-        </div>
-    )
+
+            <button
+                type="submit"
+                className="w-full lg:w-auto bg-cyan-500 hover:bg-cyan-600 text-white px-6 py-3 rounded-xl font-semibold transition"
+            >
+                {editingTodo ? "Update Task" : "+ Add Task"}
+            </button>
+
+        </form>
+
+    </div>
+);
 
 }
 export default TodoForm;
