@@ -1,0 +1,40 @@
+@import "tailwindcss";
+:root {
+  --paper: #EFEEE2;
+  --ink: #20301F;
+  --ink-soft: #4B5A45;
+  --line: #C9C4AC;
+  --stone: #8A8C79;
+  --stone-bg: #E4E3D6;
+  --blaze: #BE5A2B;
+  --blaze-bg: #F3DFCE;
+  --summit: #33502F;
+  --summit-bg: #DEE8D3;
+  --card: #FBFAF3;
+
+  --sans: 'IBM Plex Sans', system-ui, sans-serif;
+  --heading: 'Fraunces', serif;
+  --mono: 'IBM Plex Mono', ui-monospace, Consolas, monospace;
+
+  font: 16px/145% var(--sans);
+  color: var(--ink);
+  background: var(--paper);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.font-trail-display { font-family: var(--heading); }
+.font-trail-mono { font-family: var(--mono); }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+}
+
+#root {
+  width: 100%;
+  min-height: 100svh;
+}
