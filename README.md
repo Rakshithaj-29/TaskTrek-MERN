@@ -4,7 +4,7 @@ TaskTrek is a full-stack task management application designed to help users orga
 
 ## 🚀 Live Demo
 
-- **Frontend: ** https://task-trek-mern.vercel.app/
+- **Frontend:** https://task-trek-mern.vercel.app/
 - **Backend API:** https://tasktrek-mern.onrender.com
 
 ## ✨ Features
@@ -233,5 +233,4 @@ This project is open-source. Add a `LICENSE` file to the repository to specify t
 
 
 
-*backend URL = https://tasktrek-mern.onrender.com
- * FrontenB URL = https://task-trek-mern.vercel.app/
+
